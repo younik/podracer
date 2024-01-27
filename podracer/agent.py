@@ -2,7 +2,7 @@ from collections import deque
 import jax
 import jax.numpy as jnp
 import numpy as np
-from podracer import structs, utils, policy
+from podracer import env, structs, policy
 import time
 import queue
 
@@ -15,7 +15,7 @@ def rollout(
     writer,
     seed,
 ):
-    envs = utils.make_env(
+    envs = env.make_env(
         args.env_id,
         seed,
         args.local_num_envs,

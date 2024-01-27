@@ -7,7 +7,7 @@ from rich.pretty import pprint
 from tensorboardX import SummaryWriter
 import jax
 import numpy as np
-from podracer import policy, utils, optimizer, framework
+from podracer import env, policy, optimizer, framework
 
 
 def main():
@@ -74,7 +74,7 @@ def main():
     key, policy_key = jax.random.split(key)
 
     # env setup
-    envs = utils.make_env(args.env_id, args.seed, args.local_num_envs)
+    envs = env.make_env(args.env_id, args.seed, args.local_num_envs)
     args.action_size = envs.single_action_space.n
     obs_sample = envs.single_observation_space.sample()
     policy_params = policy.PolicyNetwork(
