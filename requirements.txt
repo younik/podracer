@@ -1,0 +1,8 @@
+numpy
+jax
+flax
+rich
+tensorboardX
+gymnasium
+wandb
+tensorboard
