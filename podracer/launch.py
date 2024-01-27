@@ -1,7 +1,6 @@
 import uuid
 import random
 import jax
-import os
 from podracer.args import args
 from rich.pretty import pprint
 from tensorboardX import SummaryWriter
@@ -11,13 +10,6 @@ from podracer import env, policy, optimizer, framework
 
 
 def main():
-    # Fix weird OOM https://github.com/google/jax/discussions/6332#discussioncomment-1279991
-    os.environ["XLA_PYTHON_CLIENT_MEM_FRACTION"] = "0.6"
-    os.environ["XLA_FLAGS"] = "--xla_cpu_multi_thread_eigen=false " "intra_op_parallelism_threads=1"
-    # Fix CUDNN non-determinisim; https://github.com/google/jax/issues/4823#issuecomment-952835771
-    os.environ["TF_XLA_FLAGS"] = "--xla_gpu_autotune_level=2 --xla_gpu_deterministic_reductions"
-    os.environ["TF_CUDNN DETERMINISTIC"] = "1"
-
     args.local_batch_size = int(args.local_num_envs * args.num_steps * args.num_actor_threads * len(args.actor_device_ids))
     args.local_minibatch_size = int(args.local_batch_size // args.num_minibatches)
     assert (
@@ -85,8 +77,4 @@ def main():
     tx = optimizer.get(args)
     framework.run(policy_params, tx, writer, key)
 
-    writer.close
-
-
-if __name__ == "__main__":
-    main()
+    writer.close()

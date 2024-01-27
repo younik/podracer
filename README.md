@@ -17,3 +17,4 @@ Currently implementing PPO with code adapted from [vwxyzjn/cleanba](https://gith
 | optimizer | Handles the Optax optimizer creation                |
 | env       | Handles environment creation                        |
 | args      | Arguments files to easily switch across experiments |
+| launch    | Setup the arguments and WandB run                   |
